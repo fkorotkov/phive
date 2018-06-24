@@ -1,0 +1,16 @@
+container:
+  image: php:7.1
+
+test_task:
+  before_install:
+    - composer self-update
+    - wget https://phar.io/releases/phive.phar
+    - wget https://phar.io/releases/phive.phar.asc
+    - gpg --keyserver hkps.pool.sks-keyservers.net --recv-keys 0x9B2D5D79
+    - gpg --verify phive.phar.asc phive.phar
+    - chmod +x phive.phar
+    - sudo mv phive.phar /usr/bin/phive
+  install_script:
+    - composer install --no-interaction --prefer-source
+    - phive --no-progress install --trust-gpg-keys 4AA394086372C20A,2A8299CE842DD38C phpab phpunit@^5.7
+  test_script: ./tools/phpunit
