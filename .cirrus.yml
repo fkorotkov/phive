@@ -2,7 +2,7 @@ container:
   image: php:7.1
 
 test_task:
-  before_install:
+  before_install_script:
     - composer self-update
     - wget https://phar.io/releases/phive.phar
     - wget https://phar.io/releases/phive.phar.asc
